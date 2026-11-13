@@ -1,0 +1,45 @@
+{
+  "snapshot_at": "2026-11-12T14:32:23Z",
+  "balance": {
+    "credits_remaining_usd": 4.25,
+    "total_credits_usd": 10.0,
+    "credits_used_usd": 5.75,
+    "accounting_method": "energy",
+    "legacy_credits_usd": 0.0,
+    "new_credits_usd": 10.0
+  },
+  "usage": {
+    "lifetime": {
+      "cost_usd": 5.75,
+      "requests": 1830,
+      "tokens": 41200000,
+      "energy_kwh": 0.62
+    },
+    "current_month": {
+      "cost_usd": 1.2,
+      "requests": 410,
+      "tokens": 9800000,
+      "energy_kwh": 0.13
+    }
+  },
+  "limits": {
+    "overage_limit_usd": null,
+    "rate_limit_tier": "standard"
+  },
+  "subscription": null,
+  "daily_free_energy": {
+    "kwh_included": 0.1,
+    "kwh_used": 0.04,
+    "kwh_remaining": 0.06,
+    "reset_at": "2026-11-13T00:00:00Z",
+    "model_labels": [
+      "DeepSeek-V4-Flash",
+      "DeepSeek-V4.1-Flash",
+      "GLM-5.3-Flash"
+    ]
+  },
+  "key": {
+    "name": "example key",
+    "allowance": null
+  }
+}

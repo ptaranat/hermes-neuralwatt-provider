@@ -1,0 +1,43 @@
+{
+  "period": {
+    "start": "2026-10-13",
+    "end": "2026-11-12"
+  },
+  "totals": {
+    "requests": 410,
+    "requests_with_energy": 409,
+    "energy_kwh": 0.13,
+    "energy_kwh_charged": 0.11,
+    "energy_joules": 468000,
+    "carbon_g_co2eq": 35.2
+  },
+  "daily": [
+    {
+      "date": "2026-11-12",
+      "requests": 12,
+      "requests_with_energy": 12,
+      "energy_kwh": 0.004,
+      "energy_kwh_charged": 0.004,
+      "energy_joules": 14400,
+      "carbon_g_co2eq": 1.1
+    },
+    {
+      "date": "2026-11-11",
+      "requests": 12,
+      "requests_with_energy": 12,
+      "energy_kwh": 0.004,
+      "energy_kwh_charged": 0.004,
+      "energy_joules": 14400,
+      "carbon_g_co2eq": 1.1
+    },
+    {
+      "date": "2026-11-10",
+      "requests": 12,
+      "requests_with_energy": 12,
+      "energy_kwh": 0.004,
+      "energy_kwh_charged": 0.004,
+      "energy_joules": 14400,
+      "carbon_g_co2eq": 1.1
+    }
+  ]
+}

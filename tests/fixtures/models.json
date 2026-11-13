@@ -1,0 +1,1653 @@
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "qwen-3.8-27b",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 262128,
+      "metadata": {
+        "display_name": "Qwen 3.8 27B",
+        "description": "Qwen3.8-27B — dense 27B VL model with MTP speculative decoding, native 262K context.",
+        "provider": "Qwen",
+        "huggingface_id": "Qwen/Qwen3.8-27B-FP8",
+        "pricing": {
+          "input_per_million": 0.45,
+          "output_per_million": 3.2,
+          "cached_input_per_million": 0.25,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": false,
+          "service_tier": "standard",
+          "flex_discount_multiplier": null
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "xhigh",
+            "medium",
+            "low",
+            "none"
+          ],
+          "default_effort": "xhigh",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "max": "xhigh",
+            "high": "xhigh",
+            "minimal": "low"
+          }
+        },
+        "limits": {
+          "max_context_length": 262128,
+          "max_output_tokens": 131072,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "qwen-3.8-27b-flex",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 262128,
+      "metadata": {
+        "display_name": "Qwen 3.8 27B (flex)",
+        "description": "Discounted async tier. Requests are held server-side during peak until a capacity gap opens; billed at a reduced rate. Intended for async agent workloads (overnight research, batch reports, nightly code reviews) that tolerate variable latency. See docs/design/flex-tier.md.",
+        "provider": "Qwen",
+        "huggingface_id": "Qwen/Qwen3.8-27B-FP8",
+        "pricing": {
+          "input_per_million": 0.2925,
+          "output_per_million": 2.08,
+          "cached_input_per_million": 0.1625,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": false,
+          "service_tier": "flex",
+          "flex_discount_multiplier": 0.65
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "xhigh",
+            "medium",
+            "low",
+            "none"
+          ],
+          "default_effort": "xhigh",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "max": "xhigh",
+            "high": "xhigh",
+            "minimal": "low"
+          }
+        },
+        "limits": {
+          "max_context_length": 262128,
+          "max_output_tokens": 131072,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "mimo-v2.6-pro",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 1048560,
+      "metadata": {
+        "display_name": "MiMo-V2.6-Pro",
+        "description": "Xiaomi's MOPD upgrade of MiMo-V2.6-Pro, with reduced tool-call repetition. Sparse MoE (1.02T total / 42B active) with native vision, tool calling and optional reasoning. 1M-token context.",
+        "provider": "Xiaomi",
+        "huggingface_id": "XiaomiMiMo/MiMo-V2.6-Pro-MOPD",
+        "pricing": {
+          "input_per_million": 0.435,
+          "output_per_million": 0.87,
+          "cached_input_per_million": 0.0036,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": false,
+          "service_tier": "standard",
+          "flex_discount_multiplier": null
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": true,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "high",
+            "none"
+          ],
+          "default_effort": "high",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "max": "high",
+            "xhigh": "high",
+            "medium": "high",
+            "low": "high",
+            "minimal": "none"
+          }
+        },
+        "limits": {
+          "max_context_length": 1048560,
+          "max_output_tokens": 393216,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": 600.0,
+          "max_audio_clips": 8,
+          "max_audio_bytes": 26214400
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "mimo-v2.6-pro-flex",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 1048560,
+      "metadata": {
+        "display_name": "MiMo-V2.6-Pro (flex)",
+        "description": "Discounted async tier. Requests are held server-side during peak until a capacity gap opens; billed at a reduced rate. Intended for async agent workloads (overnight research, batch reports, nightly code reviews) that tolerate variable latency. See docs/design/flex-tier.md.",
+        "provider": "Xiaomi",
+        "huggingface_id": "XiaomiMiMo/MiMo-V2.6-Pro-MOPD",
+        "pricing": {
+          "input_per_million": 0.28275,
+          "output_per_million": 0.5655,
+          "cached_input_per_million": 0.00234,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": false,
+          "service_tier": "flex",
+          "flex_discount_multiplier": 0.65
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": true,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "high",
+            "none"
+          ],
+          "default_effort": "high",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "max": "high",
+            "xhigh": "high",
+            "medium": "high",
+            "low": "high",
+            "minimal": "none"
+          }
+        },
+        "limits": {
+          "max_context_length": 1048560,
+          "max_output_tokens": 393216,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": 600.0,
+          "max_audio_clips": 8,
+          "max_audio_bytes": 26214400
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "nw-flash",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 1048560,
+      "metadata": {
+        "display_name": "Neuralwatt Flash",
+        "description": "Tracking alias: our current cheap, fast model, currently DeepSeek V4.1 Flash. We move it to a newer model as our catalog changes, with notice before each move. Behaves exactly like the model it points at: same defaults, same price. See the tracking aliases guide.",
+        "provider": "DeepSeek",
+        "huggingface_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+        "pricing": {
+          "input_per_million": 0.15,
+          "output_per_million": 0.6,
+          "cached_input_per_million": 0.015,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": false,
+          "service_tier": "standard",
+          "flex_discount_multiplier": null
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "low",
+            "none"
+          ],
+          "default_effort": "high",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "medium": "high",
+            "minimal": "low"
+          }
+        },
+        "limits": {
+          "max_context_length": 1048560,
+          "max_output_tokens": 393216,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "nw-flash-flex",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 1048560,
+      "metadata": {
+        "display_name": "Neuralwatt Flash (flex)",
+        "description": "Flex tier of nw-flash (currently DeepSeek V4.1 Flash): discounted, best-effort latency (requests may be held under load). Moves with nw-flash.",
+        "provider": "DeepSeek",
+        "huggingface_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+        "pricing": {
+          "input_per_million": 0.0975,
+          "output_per_million": 0.39,
+          "cached_input_per_million": 0.00975,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": false,
+          "service_tier": "flex",
+          "flex_discount_multiplier": 0.65
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "low",
+            "none"
+          ],
+          "default_effort": "high",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "medium": "high",
+            "minimal": "low"
+          }
+        },
+        "limits": {
+          "max_context_length": 1048560,
+          "max_output_tokens": 393216,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "glm-5.3",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 1048560,
+      "metadata": {
+        "display_name": "GLM 5.3",
+        "description": "GLM 5.3 (zai-org/GLM-5.3, fp8-native). Same GlmMoeDsaForCausalLM architecture as GLM 5.2; 1M context; GLM 5.2 pricing parity. Exited preview 2026-09-10.",
+        "provider": "ZhipuAI",
+        "huggingface_id": "zai-org/GLM-5.3",
+        "pricing": {
+          "input_per_million": 1.45,
+          "output_per_million": 4.5,
+          "cached_input_per_million": 0.145,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": true,
+          "service_tier": "standard",
+          "flex_discount_multiplier": null
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": false,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": true,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "high",
+            "low"
+          ],
+          "default_effort": "max",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal"
+          ],
+          "effort_aliases": {
+            "xhigh": "max",
+            "medium": "high",
+            "minimal": "low"
+          }
+        },
+        "limits": {
+          "max_context_length": 1048560,
+          "max_output_tokens": null,
+          "max_images": null,
+          "max_images_total": null,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "glm-5.3-flex",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 1048560,
+      "metadata": {
+        "display_name": "GLM 5.3 (flex)",
+        "description": "Discounted async tier. Requests are held server-side during peak until a capacity gap opens; billed at a reduced rate. Intended for async agent workloads (overnight research, batch reports, nightly code reviews) that tolerate variable latency. See docs/design/flex-tier.md.",
+        "provider": "ZhipuAI",
+        "huggingface_id": "zai-org/GLM-5.3",
+        "pricing": {
+          "input_per_million": 0.9425,
+          "output_per_million": 2.925,
+          "cached_input_per_million": 0.09425,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": true,
+          "service_tier": "flex",
+          "flex_discount_multiplier": 0.65
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": false,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": true,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "high",
+            "low"
+          ],
+          "default_effort": "max",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal"
+          ],
+          "effort_aliases": {
+            "xhigh": "max",
+            "medium": "high",
+            "minimal": "low"
+          }
+        },
+        "limits": {
+          "max_context_length": 1048560,
+          "max_output_tokens": null,
+          "max_images": null,
+          "max_images_total": null,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "glm-5.3-flash",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 1048560,
+      "metadata": {
+        "display_name": "GLM-5.3 Flash",
+        "description": "GLM-5.3-Flash: a fast, reasoning-capable model (glm5_next architecture — KDA linear-attention + sparse-MLA, MoE). 1M context, native vision, always-on reasoning with low/high/max effort control. fp8-native. Flex tier available (glm-5.3-flash-flex). Exited preview 2026-09-11.",
+        "provider": "ZhipuAI",
+        "huggingface_id": "zai-org/GLM-5.3-Flash",
+        "pricing": {
+          "input_per_million": 0.15,
+          "output_per_million": 0.5,
+          "cached_input_per_million": 0.03,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": false,
+          "service_tier": "standard",
+          "flex_discount_multiplier": null
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": true,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "high",
+            "low"
+          ],
+          "default_effort": "max",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal"
+          ],
+          "effort_aliases": {
+            "xhigh": "max",
+            "medium": "high",
+            "minimal": "low"
+          }
+        },
+        "limits": {
+          "max_context_length": 1048560,
+          "max_output_tokens": null,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "glm-5.3-flash-flex",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 1048560,
+      "metadata": {
+        "display_name": "GLM-5.3 Flash (flex)",
+        "description": "Discounted async tier. Requests are held server-side during peak until a capacity gap opens; billed at a reduced rate. Intended for async agent workloads (overnight research, batch reports, nightly code reviews) that tolerate variable latency. See docs/design/flex-tier.md.",
+        "provider": "ZhipuAI",
+        "huggingface_id": "zai-org/GLM-5.3-Flash",
+        "pricing": {
+          "input_per_million": 0.0975,
+          "output_per_million": 0.325,
+          "cached_input_per_million": 0.0195,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": false,
+          "service_tier": "flex",
+          "flex_discount_multiplier": 0.65
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": true,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "high",
+            "low"
+          ],
+          "default_effort": "max",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal"
+          ],
+          "effort_aliases": {
+            "xhigh": "max",
+            "medium": "high",
+            "minimal": "low"
+          }
+        },
+        "limits": {
+          "max_context_length": 1048560,
+          "max_output_tokens": null,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "nw-small",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 262128,
+      "metadata": {
+        "display_name": "Neuralwatt Small",
+        "description": "Tracking alias: our current small model, currently Qwen3.8-27B. We move it to a newer model as our catalog changes, with notice before each move. Behaves exactly like the model it points at: same defaults, same price. See the tracking aliases guide.",
+        "provider": "Qwen",
+        "huggingface_id": "Qwen/Qwen3.8-27B-FP8",
+        "pricing": {
+          "input_per_million": 0.45,
+          "output_per_million": 3.2,
+          "cached_input_per_million": 0.25,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": false,
+          "service_tier": "standard",
+          "flex_discount_multiplier": null
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "xhigh",
+            "medium",
+            "low",
+            "none"
+          ],
+          "default_effort": "xhigh",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "max": "xhigh",
+            "high": "xhigh",
+            "minimal": "low"
+          }
+        },
+        "limits": {
+          "max_context_length": 262128,
+          "max_output_tokens": 131072,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "nw-small-flex",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 262128,
+      "metadata": {
+        "display_name": "Neuralwatt Small (flex)",
+        "description": "Flex tier of nw-small (currently Qwen3.8-27B): discounted, best-effort latency (requests may be held under load). Moves with nw-small.",
+        "provider": "Qwen",
+        "huggingface_id": "Qwen/Qwen3.8-27B-FP8",
+        "pricing": {
+          "input_per_million": 0.2925,
+          "output_per_million": 2.08,
+          "cached_input_per_million": 0.1625,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": false,
+          "service_tier": "flex",
+          "flex_discount_multiplier": 0.65
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "xhigh",
+            "medium",
+            "low",
+            "none"
+          ],
+          "default_effort": "xhigh",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "max": "xhigh",
+            "high": "xhigh",
+            "minimal": "low"
+          }
+        },
+        "limits": {
+          "max_context_length": 262128,
+          "max_output_tokens": 131072,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "qwen3.6-35b",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 262128,
+      "metadata": {
+        "display_name": "Qwen3.6 35B",
+        "description": "Qwen3.6 35B-A3B — quant-agnostic canonical name for the Qwen3.6 35B family.",
+        "provider": "Qwen",
+        "huggingface_id": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "pricing": {
+          "input_per_million": 0.29,
+          "output_per_million": 1.15,
+          "cached_input_per_million": 0.029,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": true,
+          "service_tier": "standard",
+          "flex_discount_multiplier": null
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "high",
+            "none"
+          ],
+          "default_effort": "high",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "max": "high",
+            "xhigh": "high",
+            "medium": "high",
+            "low": "high",
+            "minimal": "high"
+          }
+        },
+        "limits": {
+          "max_context_length": 262128,
+          "max_output_tokens": null,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "qwen3.6-35b-fast",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 262128,
+      "metadata": {
+        "display_name": "Qwen3.6 35B Fast",
+        "description": "Qwen3.6 35B with thinking mode disabled for instant responses. A lightweight, fast model for rapid iteration.",
+        "provider": "Qwen",
+        "huggingface_id": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "pricing": {
+          "input_per_million": 0.29,
+          "output_per_million": 1.15,
+          "cached_input_per_million": 0.029,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": true,
+          "service_tier": "standard",
+          "flex_discount_multiplier": null
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": false,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": false,
+          "supported_efforts": [
+            "none"
+          ],
+          "default_effort": "none",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "max": "none",
+            "xhigh": "none",
+            "high": "none",
+            "medium": "none",
+            "low": "none",
+            "minimal": "none"
+          }
+        },
+        "limits": {
+          "max_context_length": 262128,
+          "max_output_tokens": null,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "qwen3.6-35b-flex",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 262128,
+      "metadata": {
+        "display_name": "Qwen3.6 35B (flex)",
+        "description": "Discounted async tier. Requests are held server-side during peak until a capacity gap opens; billed at a reduced rate. Intended for async agent workloads (overnight research, batch reports, nightly code reviews) that tolerate variable latency. See docs/design/flex-tier.md.",
+        "provider": "Qwen",
+        "huggingface_id": "Qwen/Qwen3.6-35B-A3B-FP8",
+        "pricing": {
+          "input_per_million": 0.1885,
+          "output_per_million": 0.7475,
+          "cached_input_per_million": 0.01885,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": true,
+          "service_tier": "flex",
+          "flex_discount_multiplier": 0.65
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "high",
+            "none"
+          ],
+          "default_effort": "high",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "max": "high",
+            "xhigh": "high",
+            "medium": "high",
+            "low": "high",
+            "minimal": "high"
+          }
+        },
+        "limits": {
+          "max_context_length": 262128,
+          "max_output_tokens": null,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "deepseek-v4.1-flash",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 1048560,
+      "metadata": {
+        "display_name": "DeepSeek V4.1 Flash",
+        "description": "DeepSeek V4.1 Flash — MoE with tool calling and adjustable reasoning effort. 1M-token native context.",
+        "provider": "DeepSeek",
+        "huggingface_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+        "pricing": {
+          "input_per_million": 0.15,
+          "output_per_million": 0.6,
+          "cached_input_per_million": 0.015,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": false,
+          "service_tier": "standard",
+          "flex_discount_multiplier": null
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "low",
+            "none"
+          ],
+          "default_effort": "high",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "medium": "high",
+            "minimal": "low"
+          }
+        },
+        "limits": {
+          "max_context_length": 1048560,
+          "max_output_tokens": 393216,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "deepseek-v4.1-flash-flex",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 1048560,
+      "metadata": {
+        "display_name": "DeepSeek V4.1 Flash (flex)",
+        "description": "Discounted async tier. Requests are held server-side during peak until a capacity gap opens; billed at a reduced rate. Intended for async agent workloads (overnight research, batch reports, nightly code reviews) that tolerate variable latency. See docs/design/flex-tier.md.",
+        "provider": "DeepSeek",
+        "huggingface_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+        "pricing": {
+          "input_per_million": 0.0975,
+          "output_per_million": 0.39,
+          "cached_input_per_million": 0.00975,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": false,
+          "service_tier": "flex",
+          "flex_discount_multiplier": 0.65
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "low",
+            "none"
+          ],
+          "default_effort": "high",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "medium": "high",
+            "minimal": "low"
+          }
+        },
+        "limits": {
+          "max_context_length": 1048560,
+          "max_output_tokens": 393216,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "deepseek-v4.1-flash-speed",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 1048560,
+      "metadata": {
+        "display_name": "DeepSeek V4.1 Flash (Speed)",
+        "description": "Speed tier: a dedicated lane serving a small number of sessions at the engine's solo decode rate. Private preview.",
+        "provider": "DeepSeek",
+        "huggingface_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+        "pricing": {
+          "input_per_million": 0.15,
+          "output_per_million": 0.6,
+          "cached_input_per_million": 0.015,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": false,
+          "service_tier": "standard",
+          "flex_discount_multiplier": null
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "low",
+            "none"
+          ],
+          "default_effort": "high",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "medium": "high",
+            "minimal": "low"
+          }
+        },
+        "limits": {
+          "max_context_length": 1048560,
+          "max_output_tokens": 393216,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "gemma-4-31b",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 262128,
+      "metadata": {
+        "display_name": "Gemma 4 31B",
+        "description": "Google Gemma 4 31B — multimodal (text + vision) with tool calling and 262K context.",
+        "provider": "Google",
+        "huggingface_id": "nvidia/Gemma-4-31B-IT-NVFP4",
+        "pricing": {
+          "input_per_million": 0.144,
+          "output_per_million": 0.42,
+          "cached_input_per_million": 0.0144,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": true,
+          "service_tier": "standard",
+          "flex_discount_multiplier": null
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": false,
+          "supported_efforts": [
+            "max",
+            "none"
+          ],
+          "default_effort": "none",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "xhigh": "max",
+            "high": "max",
+            "medium": "max",
+            "low": "max",
+            "minimal": "max"
+          }
+        },
+        "limits": {
+          "max_context_length": 262128,
+          "max_output_tokens": 16384,
+          "max_images": 4,
+          "max_images_total": 4,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "nw-large",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 1048560,
+      "metadata": {
+        "display_name": "Neuralwatt Large",
+        "description": "Tracking alias: our current large model, currently Kimi K3.1 Pro. We move it to a newer model as our catalog changes, with notice before each move. Behaves exactly like the model it points at: same defaults, same price. See the tracking aliases guide.",
+        "provider": "MoonshotAI",
+        "huggingface_id": "moonshotai/Kimi-K3.1-Pro",
+        "pricing": {
+          "input_per_million": 2.0,
+          "output_per_million": 10.0,
+          "cached_input_per_million": 0.2,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": false,
+          "service_tier": "standard",
+          "flex_discount_multiplier": null
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "high",
+            "medium",
+            "low",
+            "none"
+          ],
+          "default_effort": "max",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "xhigh": "max",
+            "minimal": "low"
+          }
+        },
+        "limits": {
+          "max_context_length": 1048560,
+          "max_output_tokens": null,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "nw-large-flex",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 1048560,
+      "metadata": {
+        "display_name": "Neuralwatt Large (flex)",
+        "description": "Flex tier of nw-large (currently Kimi K3.1 Pro): discounted, best-effort latency (requests may be held under load). Moves with nw-large.",
+        "provider": "MoonshotAI",
+        "huggingface_id": "moonshotai/Kimi-K3.1-Pro",
+        "pricing": {
+          "input_per_million": 1.3,
+          "output_per_million": 6.5,
+          "cached_input_per_million": 0.13,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": false,
+          "service_tier": "flex",
+          "flex_discount_multiplier": 0.65
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "high",
+            "medium",
+            "low",
+            "none"
+          ],
+          "default_effort": "max",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "xhigh": "max",
+            "minimal": "low"
+          }
+        },
+        "limits": {
+          "max_context_length": 1048560,
+          "max_output_tokens": null,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "kimi-k3.1-pro",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 1048560,
+      "metadata": {
+        "display_name": "Kimi K3.1 Pro",
+        "description": "Moonshot AI Kimi K3.1 Pro — multimodal, tool calling, graded reasoning, 1M context.",
+        "provider": "MoonshotAI",
+        "huggingface_id": "moonshotai/Kimi-K3.1-Pro",
+        "pricing": {
+          "input_per_million": 2.0,
+          "output_per_million": 10.0,
+          "cached_input_per_million": 0.2,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": false,
+          "service_tier": "standard",
+          "flex_discount_multiplier": null
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "high",
+            "medium",
+            "low",
+            "none"
+          ],
+          "default_effort": "max",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "xhigh": "max",
+            "minimal": "low"
+          }
+        },
+        "limits": {
+          "max_context_length": 1048560,
+          "max_output_tokens": null,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    },
+    {
+      "id": "kimi-k3.1-pro-flex",
+      "object": "model",
+      "created": 0,
+      "owned_by": "neuralwatt",
+      "max_model_len": 1048560,
+      "metadata": {
+        "display_name": "Kimi K3.1 Pro (flex)",
+        "description": "Discounted async tier. Requests are held server-side during peak until a capacity gap opens; billed at a reduced rate. Intended for async agent workloads (overnight research, batch reports, nightly code reviews) that tolerate variable latency. See docs/design/flex-tier.md.",
+        "provider": "MoonshotAI",
+        "huggingface_id": "moonshotai/Kimi-K3.1-Pro",
+        "pricing": {
+          "input_per_million": 1.3,
+          "output_per_million": 6.5,
+          "cached_input_per_million": 0.13,
+          "cached_output_per_million": null,
+          "currency": "USD",
+          "pricing_tbd": false,
+          "cached_input_is_default": false,
+          "service_tier": "flex",
+          "flex_discount_multiplier": 0.65
+        },
+        "capabilities": {
+          "tools": true,
+          "json_mode": true,
+          "vision": true,
+          "audio_input": false,
+          "reasoning": true,
+          "reasoning_effort": true,
+          "streaming": true,
+          "system_role": true,
+          "developer_role": false,
+          "hosted_tools": false
+        },
+        "reasoning": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "high",
+            "medium",
+            "low",
+            "none"
+          ],
+          "default_effort": "max",
+          "accepted_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "effort_aliases": {
+            "xhigh": "max",
+            "minimal": "low"
+          }
+        },
+        "limits": {
+          "max_context_length": 1048560,
+          "max_output_tokens": null,
+          "max_images": 20,
+          "max_images_total": 200,
+          "max_audio_seconds": null,
+          "max_audio_clips": null,
+          "max_audio_bytes": null
+        },
+        "deprecated": false,
+        "deprecated_message": null
+      }
+    }
+  ]
+}

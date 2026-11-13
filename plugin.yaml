@@ -1,0 +1,9 @@
+name: neuralwatt-provider
+kind: model-provider
+version: "0.1.0"
+description: "Neuralwatt as a Hermes model provider: live model catalog, reasoning effort, per-turn cost and account energy in /usage."
+author: "ptaranat"
+license: MIT
+requires_hermes: ">=0.22.6"
+requires_env:
+  - NEURALWATT_API_KEY
