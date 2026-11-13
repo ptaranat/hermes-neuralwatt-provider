@@ -102,10 +102,12 @@ class ProviderTests(unittest.TestCase):
     def setUp(self):
         nw._catalogs = nw._Cache()
         nw._billing = nw._Cache()
+        nw._matrix = nw._Cache()
         self.responses = {
             f"{BASE}/models": fixture("models.json"),
             f"{BASE}/quota": fixture("quota-energy.json"),
             f"{BASE}/usage/energy": fixture("energy.json"),
+            nw.ENERGY_MATRIX_URL: fixture("energy-matrix.json"),
         }
         self.calls = []
         self.secrets = {nw.KEY_ENV: "sk-test"}
@@ -194,10 +196,86 @@ class ProviderTests(unittest.TestCase):
         self.assertEqual(body(session_id="x" * 257), {})
         self.assertEqual(body(session_id="bad\nid"), {})
 
-    def test_energy_billed_cost_is_unknown(self):
+    def matrix_wh(self, model_id, bucket):
+        row = next(r for r in fixture("energy-matrix.json")["models"] if r["id"] == model_id)
+        return Decimal(str(row["buckets"][bucket]["wh_per_request"]))
+
+    def set_quota(self, **changes):
+        quota = fixture("quota-energy.json")
+        for path, value in changes.items():
+            *parents, leaf = path.split("__")
+            target = quota
+            for parent in parents:
+                if not isinstance(target.get(parent), dict):
+                    target[parent] = {}
+                target = target[parent]
+            target[leaf] = value
+        self.responses[f"{BASE}/quota"] = quota
+
+    def test_energy_estimate_uses_alias_target_and_bucket(self):
+        cost = nw.neuralwatt.get_usage_cost("nw-small", Usage(input_tokens=2_000, cache_read_tokens=10_000, output_tokens=50))
+        self.assertEqual(cost.status, "estimated")
+        self.assertEqual(cost.amount_usd, self.matrix_wh("qwen-3.8-27b", 3) / 1000 * 10)
+        self.assertIn("average energy", cost.notes[0])
+
+    def test_energy_estimate_is_capped_at_token_price(self):
+        usage = Usage(input_tokens=59, output_tokens=8)
+        cost = nw.neuralwatt.get_usage_cost("nw-small", usage)
+        self.assertEqual(cost.amount_usd, (Decimal("0.45") * 59 + Decimal("3.2") * 8) / 1_000_000)
+
+    def test_energy_estimate_flex_multiplier(self):
+        usage = Usage(input_tokens=2_000, cache_read_tokens=10_000, output_tokens=50)
+        cost = nw.neuralwatt.get_usage_cost("glm-5.3-flex", usage)
+        self.assertEqual(cost.amount_usd, self.matrix_wh("glm-5.3", 3) / 1000 * 10 * Decimal("0.65"))
+
+    def test_energy_estimate_alias_prefers_standard_lane(self):
+        self.set_quota(daily_free_energy__model_labels=[])
+        usage = Usage(input_tokens=2_000, cache_read_tokens=30_000, output_tokens=50)
+        cost = nw.neuralwatt.get_usage_cost("nw-flash", usage)
+        pricing = next(m for m in fixture("models.json")["data"] if m["id"] == "nw-flash")["metadata"]["pricing"]
+        energy = self.matrix_wh("deepseek-v4.1-flash", 4) / 1000 * 10
+        self.assertEqual(cost.amount_usd, min(energy, nw._token_cost(pricing, usage)))
+        self.assertNotEqual(energy, self.matrix_wh("deepseek-v4.1-flash-speed", 4) / 1000 * 10)
+
+    def test_speed_lane_is_not_capped_or_free(self):
+        self.set_quota(daily_free_energy__model_labels=["DeepSeek-V4.1-Flash"])
+        usage = Usage(input_tokens=59, output_tokens=8)
+        cost = nw.neuralwatt.get_usage_cost("deepseek-v4.1-flash-speed", usage)
+        self.assertEqual(cost.amount_usd, self.matrix_wh("deepseek-v4.1-flash-speed", 0) / 1000 * 10)
+
+    def test_free_energy_makes_covered_models_included(self):
+        cost = nw.neuralwatt.get_usage_cost("glm-5.3-flash", Usage(input_tokens=1000, output_tokens=10))
+        self.assertEqual((cost.status, cost.amount_usd), ("included", Decimal(0)))
+        self.assertIn("free energy", cost.notes[0])
+
+    def test_free_energy_used_up_is_estimated(self):
+        self.set_quota(daily_free_energy__kwh_remaining=0.0, daily_free_energy__reset_at="2999-01-01T00:00:00Z")
+        cost = nw.neuralwatt.get_usage_cost("glm-5.3-flash", Usage(input_tokens=1000, output_tokens=10))
+        self.assertEqual(cost.status, "estimated")
+
+    def test_plan_allowance_is_included(self):
+        self.set_quota(subscription={"plan": "standard", "status": "active", "kwh_remaining": 6.0, "in_overage": False})
+        cost = nw.neuralwatt.get_usage_cost("nw-small", Usage(input_tokens=1000, output_tokens=10))
+        self.assertEqual(cost.status, "included")
+        self.assertIn("allowance", cost.notes[0])
+
+    def test_plan_allowance_from_included_and_used(self):
+        self.set_quota(subscription={"plan": "standard", "kwh_included": 20.0, "kwh_used": 13.9})
+        self.assertEqual(nw.neuralwatt.get_usage_cost("nw-small", Usage(input_tokens=1000)).status, "included")
+        nw._billing = nw._Cache()
+        self.set_quota(subscription={"plan": "standard", "status": "past_due", "kwh_remaining": 6.0})
+        self.assertEqual(nw.neuralwatt.get_usage_cost("nw-small", Usage(input_tokens=1000)).status, "estimated")
+
+    def test_legacy_credits_use_grandfathered_rate(self):
+        self.set_quota(balance__legacy_credits_usd=3.0)
+        usage = Usage(input_tokens=2_000, cache_read_tokens=10_000, output_tokens=50)
+        cost = nw.neuralwatt.get_usage_cost("nw-small", usage)
+        self.assertEqual(cost.amount_usd, self.matrix_wh("qwen-3.8-27b", 3) / 1000 * 5)
+
+    def test_energy_without_matrix_is_unknown(self):
+        self.responses.pop(nw.ENERGY_MATRIX_URL)
         cost = nw.neuralwatt.get_usage_cost("nw-small", Usage(input_tokens=1000, output_tokens=100))
         self.assertEqual(cost.status, "unknown")
-        self.assertIsNone(cost.amount_usd)
         self.assertIn("/usage", cost.notes[0])
 
     def test_unknown_billing_cost_is_unknown(self):

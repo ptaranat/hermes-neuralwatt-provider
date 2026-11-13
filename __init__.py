@@ -23,8 +23,12 @@ KEY_ENV = "NEURALWATT_API_KEY"
 BASE_URL_ENV = "NEURALWATT_BASE_URL"
 USER_AGENT = "hermes-neuralwatt-provider/0.1.0"
 
+ENERGY_MATRIX_URL = "https://portal.neuralwatt.com/api/energy-pricing/matrix"
+LEGACY_CREDIT_RATE_PER_KWH = Decimal("5")
+
 CATALOG_TTL_S = 3600.0
-BILLING_TTL_S = 3600.0
+MATRIX_TTL_S = 900.0
+BILLING_TTL_S = 600.0
 RETRY_AFTER_FAILURE_S = 300.0
 HOT_PATH_TIMEOUT_S = 5.0
 
@@ -105,6 +109,7 @@ class _Cache:
 
 _catalogs = _Cache()
 _billing = _Cache()
+_matrix = _Cache()
 
 
 class NeuralwattProfile(ProviderProfile):
@@ -157,22 +162,58 @@ class NeuralwattProfile(ProviderProfile):
             return {}
         return {"metadata": {"conversation_id": conversation_id}}
 
-    def _accounting_method(self) -> str | None:
+    def _billing_profile(self) -> dict | None:
         api_key = _secret(KEY_ENV)
         if not api_key:
             return None
         base = _api_base()
         key = _billing_key(base, api_key)
-        hit, method = _billing.get(key)
+        hit, billing = _billing.get(key)
         if hit:
-            return method
-        quota = _get_json(f"{base}/quota", api_key)
-        method = _accounting_method_of(quota)
-        if method:
-            _billing.put(key, method, BILLING_TTL_S)
+            return billing
+        billing = _billing_of(_get_json(f"{base}/quota", api_key))
+        if billing:
+            _billing.put(key, billing, BILLING_TTL_S)
         else:
             _billing.put_failure(key, RETRY_AFTER_FAILURE_S)
-        return method
+        return billing
+
+    def _energy_matrix(self) -> dict | None:
+        hit, matrix = _matrix.get(ENERGY_MATRIX_URL)
+        if hit:
+            return matrix
+        matrix = _get_json(ENERGY_MATRIX_URL)
+        if isinstance(matrix, dict) and isinstance(matrix.get("models"), list):
+            _matrix.put(ENERGY_MATRIX_URL, matrix, MATRIX_TTL_S)
+            return matrix
+        _matrix.put_failure(ENERGY_MATRIX_URL, RETRY_AFTER_FAILURE_S)
+        return None
+
+    def _energy_cost(self, model: str, usage: Any, billing: dict) -> Any:
+        from agent.usage_pricing import CostResult
+
+        catalog = self._catalog() or {}
+        item = catalog.get(model) or {}
+        if billing["plan_active"]:
+            return _included_cost(CostResult, "Drawn from your plan's kWh allowance.")
+        if billing["free_remaining_kwh"] > 0 and _free_energy_covers(model, item, billing["free_labels"]):
+            return _included_cost(CostResult, "Covered by today's free energy.")
+        matrix = self._energy_matrix()
+        row, multiplier = _matrix_row(model, catalog, matrix)
+        wh = _wh_for_prompt(row, matrix, _prompt_tokens(usage))
+        rate = LEGACY_CREDIT_RATE_PER_KWH if billing["legacy_credits"] else _energy_rate(matrix)
+        if wh is None or rate is None:
+            return CostResult(amount_usd=None, status="unknown", source="none", label="n/a",
+                              notes=("No published energy figure for this model and prompt size. /usage shows actual spend.",))
+        amount = Decimal(str(wh)) / 1000 * rate * multiplier
+        if row.get("lane") != "speed":
+            ceiling = _token_cost((item.get("metadata") or {}).get("pricing") or {}, usage)
+            if ceiling is not None:
+                amount = min(amount, ceiling)
+        return CostResult(amount_usd=amount, status="estimated", source="provider_models_api",
+                          label=_cost_label(amount), fetched_at=datetime.now(timezone.utc),
+                          pricing_version=f"neuralwatt-energy-matrix@{matrix.get('generated_at', '')}",
+                          notes=("Estimated from Neuralwatt's average energy per request. /usage shows actual spend.",))
 
     def get_usage_cost(self, model: str, usage: Any) -> Any | None:
         from agent.usage_pricing import CostResult
@@ -182,11 +223,12 @@ class NeuralwattProfile(ProviderProfile):
         if reported is not None:
             return CostResult(amount_usd=Decimal(str(reported)), status="actual", source="provider_cost_api",
                               label=_cost_label(Decimal(str(reported))), fetched_at=datetime.now(timezone.utc))
-        method = self._accounting_method()
-        if method != "token":
-            note = "Billed by energy, not tokens." if method == "energy" else "Billing method unknown."
+        billing = self._billing_profile()
+        if billing and billing["method"] == "energy":
+            return self._energy_cost(model, usage, billing)
+        if not billing or billing["method"] != "token":
             return CostResult(amount_usd=None, status="unknown", source="none", label="n/a",
-                              notes=(f"{note} /usage shows actual spend.",))
+                              notes=("Billing method unknown. /usage shows actual spend.",))
         pricing = (self._model(model) or {}).get("metadata", {}).get("pricing") or {}
         amount = _token_cost(pricing, usage)
         if amount is None:
@@ -207,9 +249,8 @@ class NeuralwattProfile(ProviderProfile):
         if not isinstance(quota, dict):
             return AccountUsageSnapshot(provider=self.name, source="neuralwatt_quota_api", fetched_at=now,
                                         title="Neuralwatt account", unavailable_reason="Neuralwatt account API unavailable")
-        method = _accounting_method_of(quota)
-        if method:
-            _billing.put(_billing_key(base, api_key), method, BILLING_TTL_S)
+        if billing := _billing_of(quota):
+            _billing.put(_billing_key(base, api_key), billing, BILLING_TTL_S)
         energy = _get_json(f"{base}/usage/energy", api_key, timeout=4.0)
         windows = [AccountUsageWindow(**window) for window in _quota_windows(quota)]
         details = _quota_details(quota) + _energy_details(energy)
@@ -267,6 +308,78 @@ def _cost_label(amount: Decimal) -> str:
         return f"~${amount:.2f}"
     label = f"~${amount:.4f}"
     return label if label != "~$0.0000" else "~$<0.0001"
+
+
+def _billing_of(quota: Any) -> dict | None:
+    method = _accounting_method_of(quota)
+    if not method:
+        return None
+    subscription = quota.get("subscription") or {}
+    free = quota.get("daily_free_energy") or {}
+    reset = _parse_time(free.get("reset_at"))
+    free_remaining = _number(free.get("kwh_remaining")) or 0.0
+    if reset and reset <= datetime.now(timezone.utc):
+        free_remaining = _number(free.get("kwh_included")) or 0.0
+    plan_remaining = _number(subscription.get("kwh_remaining"))
+    if plan_remaining is None and _number(subscription.get("kwh_included")) is not None:
+        plan_remaining = _number(subscription.get("kwh_included")) - (_number(subscription.get("kwh_used")) or 0.0)
+    return {
+        "method": method,
+        "plan_active": subscription.get("status", "active") in ("active", "trialing", "canceling")
+        and not subscription.get("in_overage") and (plan_remaining or 0) > 0,
+        "free_remaining_kwh": free_remaining,
+        "free_labels": [str(label) for label in free.get("model_labels") or ()],
+        "legacy_credits": (_number((quota.get("balance") or {}).get("legacy_credits_usd")) or 0) > 0,
+    }
+
+
+def _included_cost(cost_result: Any, note: str) -> Any:
+    return cost_result(amount_usd=Decimal(0), status="included", source="none", label="included",
+                       fetched_at=datetime.now(timezone.utc), notes=(note,))
+
+
+def _free_energy_covers(model: str, item: dict, labels: list[str]) -> bool:
+    if model.endswith("-speed"):
+        return False
+    name = str((item.get("metadata") or {}).get("huggingface_id") or "").rsplit("/", 1)[-1].lower()
+    return bool(name) and any(name == label.lower() or name.startswith(label.lower() + "-") for label in labels)
+
+
+def _matrix_row(model: str, catalog: dict, matrix: dict | None) -> tuple[dict, Decimal]:
+    """Flex ids use their standard row and the flex multiplier; aliases use their target's row."""
+    rows = {row.get("id"): row for row in (matrix or {}).get("models") or () if isinstance(row, dict)}
+    item = catalog.get(model) or {}
+    pricing = (item.get("metadata") or {}).get("pricing") or {}
+    multiplier = Decimal("1")
+    if pricing.get("service_tier") == "flex" or model.endswith("-flex"):
+        multiplier = Decimal(str(_number(pricing.get("flex_discount_multiplier")) or 0.65))
+        model = model.removesuffix("-flex")
+    if model in rows:
+        return rows[model], multiplier
+    target = ((catalog.get(model) or item).get("metadata") or {}).get("huggingface_id")
+    for candidate, candidate_item in catalog.items():
+        row = rows.get(candidate)
+        if row and row.get("lane") == "standard" and (candidate_item.get("metadata") or {}).get("huggingface_id") == target:
+            return row, multiplier
+    return {}, multiplier
+
+
+def _prompt_tokens(usage: Any) -> int:
+    return sum(int(getattr(usage, name, 0) or 0) for name in ("input_tokens", "cache_read_tokens", "cache_write_tokens"))
+
+
+def _wh_for_prompt(row: dict, matrix: dict | None, prompt_tokens: int) -> float | None:
+    for bucket, figure in zip((matrix or {}).get("prompt_size_buckets") or (), row.get("buckets") or ()):
+        low, high = bucket.get("min_prompt_tokens") or 0, bucket.get("max_prompt_tokens")
+        if prompt_tokens >= low and (high is None or prompt_tokens < high):
+            return _number((figure or {}).get("wh_per_request"))
+    return None
+
+
+def _energy_rate(matrix: dict | None) -> Decimal | None:
+    rate = (matrix or {}).get("energy_rate") or {}
+    amount = _number(rate.get("amount"))
+    return Decimal(str(amount)) if amount and rate.get("per") == "kWh" and rate.get("currency") == "USD" else None
 
 
 def _accounting_method_of(quota: Any) -> str | None:
