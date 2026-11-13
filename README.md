@@ -1,5 +1,7 @@
 # Neuralwatt provider for Hermes
 
+![Neuralwatt for Hermes](assets/card.png)
+
 Run [Hermes](https://github.com/NousResearch/hermes-agent) on [Neuralwatt](https://neuralwatt.com). You get the live model list, reasoning effort that works, and your balance and energy use in `/usage`.
 
 ## Install
@@ -63,4 +65,4 @@ The tests use saved API responses. They don't need a key or Hermes.
 
 ## License
 
-MIT. Not affiliated with Neuralwatt.
+MIT. Not affiliated with Neuralwatt. The Neuralwatt name and logo belong to Neuralwatt.
